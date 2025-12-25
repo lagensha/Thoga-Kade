@@ -113,17 +113,30 @@ ObservableList<Customer_Management_InfoDTO>customerManagementInfoDTOS= FXCollect
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
-
+        Customer_Management_InfoDTO deleteInfoDTO=tblCustomerManagement.getSelectionModel().getSelectedItem();
+        customerManagementInfoDTOS.remove(deleteInfoDTO);
+        clearText();
     }
 
     @FXML
     void btnResetOnAction(ActionEvent event) {
-
+        clearText();
     }
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
+        Customer_Management_InfoDTO updateInfoDTO=tblCustomerManagement.getSelectionModel().getSelectedItem();
 
+        updateInfoDTO.setCustomerId(txtCustomerId.getText());
+        updateInfoDTO.setName(txtName.getText());
+        updateInfoDTO.setTitle(txtTitle.getText());
+        updateInfoDTO.setDOB(txtDOB.getText());
+        updateInfoDTO.setAddress(txtAddress.getText());
+        updateInfoDTO.setSalary(Double.parseDouble(txtSalary.getText()));
+        updateInfoDTO.setProvince(txtProvince.getText());
+        updateInfoDTO.setPostalcode(txtPostalcode.getText());
+        tblCustomerManagement.refresh();
+        clearText();
     }
 
     @Override

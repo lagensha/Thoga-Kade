@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.icet.controller.Customer_management_form">
    <children>
       <ImageView fitHeight="584.0" fitWidth="987.0" layoutY="-131.0" pickOnBounds="true" preserveRatio="true">
@@ -37,34 +36,39 @@
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <TextField fx:id="txtCustomerId" layoutX="14.0" layoutY="54.0" promptText="CustomerId" />
-      <TextField fx:id="txtTitle" layoutX="210.0" layoutY="54.0" promptText="Title" />
-      <TextField fx:id="txtName" layoutX="387.0" layoutY="54.0" promptText="Name" />
-      <TextField fx:id="txtDOB" layoutX="566.0" layoutY="54.0" promptText="DOB" />
-      <TextField fx:id="txtSalary" layoutX="743.0" layoutY="54.0" promptText="Salary" />
-      <TextField fx:id="txtAddress" layoutX="14.0" layoutY="98.0" promptText="Address" />
-      <TextField fx:id="txtCity" layoutX="210.0" layoutY="98.0" promptText="City" />
-      <TextField fx:id="txtProvince" layoutX="397.0" layoutY="98.0" promptText="Province" />
-      <TextField fx:id="txtPostalcode" layoutX="566.0" layoutY="98.0" promptText="PostalCode" />
-      <Button fx:id="btnAdd" layoutX="144.0" layoutY="143.0" mnemonicParsing="false" onAction="#btnAddOnAction" prefHeight="40.0" prefWidth="90.0" text="Add">
+      <TextField fx:id="txtCustomerId" layoutX="14.0" layoutY="67.0" promptText="CustomerId" />
+      <TextField fx:id="txtTitle" layoutX="210.0" layoutY="67.0" promptText="Title" />
+      <TextField fx:id="txtName" layoutX="385.0" layoutY="67.0" promptText="Name" />
+      <TextField fx:id="txtDOB" layoutX="566.0" layoutY="67.0" promptText="DOB" />
+      <TextField fx:id="txtSalary" layoutX="750.0" layoutY="67.0" promptText="Salary" />
+      <TextField fx:id="txtAddress" layoutX="14.0" layoutY="111.0" promptText="Address" />
+      <TextField fx:id="txtCity" layoutX="210.0" layoutY="111.0" promptText="City" />
+      <TextField fx:id="txtProvince" layoutX="394.0" layoutY="111.0" promptText="Province" />
+      <TextField fx:id="txtPostalcode" layoutX="566.0" layoutY="111.0" promptText="PostalCode" />
+      <Button fx:id="btnAdd" layoutX="143.0" layoutY="163.0" mnemonicParsing="false" onAction="#btnAddOnAction" prefHeight="40.0" prefWidth="90.0" text="Add">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnUpdate" layoutX="329.0" layoutY="143.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="40.0" prefWidth="90.0" text="Update">
+      <Button fx:id="btnUpdate" layoutX="331.0" layoutY="163.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="40.0" prefWidth="90.0" text="Update">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnDelete" layoutX="529.0" layoutY="143.0" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="40.0" prefWidth="90.0" text="Delete">
+      <Button fx:id="btnDelete" layoutX="521.0" layoutY="163.0" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="40.0" prefWidth="90.0" text="Delete">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnReset" layoutX="734.0" layoutY="143.0" mnemonicParsing="false" onAction="#btnResetOnAction" prefHeight="40.0" prefWidth="90.0" text="Reset">
+      <Button fx:id="btnReset" layoutX="734.0" layoutY="163.0" mnemonicParsing="false" onAction="#btnResetOnAction" prefHeight="40.0" prefWidth="90.0" text="Reset">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
+      <ImageView fitHeight="60.0" fitWidth="62.0" layoutX="8.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/logo.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

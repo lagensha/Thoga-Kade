@@ -36,7 +36,7 @@ public class login_form_controller {
             alert.showAndWait();
         }else{
             try {
-                stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/customer_management.fxml"))));
+                stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/DashBoard.fxml"))));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
