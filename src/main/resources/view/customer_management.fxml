@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.icet.controller.Customer_management_form">
+   <children>
+      <ImageView fitHeight="584.0" fitWidth="987.0" layoutY="-131.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/picture6.jpg" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tblCustomerManagement" layoutY="232.0" prefHeight="220.0" prefWidth="987.0">
+        <columns>
+          <TableColumn fx:id="colCustomerId" prefWidth="109.0" text="Customer Id" />
+            <TableColumn fx:id="colTitle" prefWidth="109.0" text="Title" />
+            <TableColumn fx:id="colName" prefWidth="109.0" text="Name" />
+            <TableColumn fx:id="colDOB" prefWidth="109.0" text="DOB" />
+            <TableColumn fx:id="colSalary" prefWidth="109.0" text="Salary" />
+            <TableColumn fx:id="colAddress" prefWidth="122.0" text="Address" />
+            <TableColumn fx:id="colCity" prefWidth="108.5" text="City" />
+            <TableColumn fx:id="colProvince" prefWidth="106.0" text="Province" />
+            <TableColumn fx:id="colPostalCode" prefWidth="104.0" text="PostalCode" />
+            <TableColumn prefWidth="104.5" text="C1" />
+        </columns>
+      </TableView>
+      <Label layoutX="331.0" layoutY="14.0" text=" Customer Management " textFill="#f8f4f4">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtCustomerId" layoutX="14.0" layoutY="54.0" promptText="CustomerId" />
+      <TextField fx:id="txtTitle" layoutX="210.0" layoutY="54.0" promptText="Title" />
+      <TextField fx:id="txtName" layoutX="387.0" layoutY="54.0" promptText="Name" />
+      <TextField fx:id="txtDOB" layoutX="566.0" layoutY="54.0" promptText="DOB" />
+      <TextField fx:id="txtSalary" layoutX="743.0" layoutY="54.0" promptText="Salary" />
+      <TextField fx:id="txtAddress" layoutX="14.0" layoutY="98.0" promptText="Address" />
+      <TextField fx:id="txtCity" layoutX="210.0" layoutY="98.0" promptText="City" />
+      <TextField fx:id="txtProvince" layoutX="397.0" layoutY="98.0" promptText="Province" />
+      <TextField fx:id="txtPostalcode" layoutX="566.0" layoutY="98.0" promptText="PostalCode" />
+      <Button fx:id="btnAdd" layoutX="144.0" layoutY="143.0" mnemonicParsing="false" onAction="#btnAddOnAction" prefHeight="40.0" prefWidth="90.0" text="Add">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnUpdate" layoutX="329.0" layoutY="143.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="40.0" prefWidth="90.0" text="Update">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnDelete" layoutX="529.0" layoutY="143.0" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="40.0" prefWidth="90.0" text="Delete">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnReset" layoutX="734.0" layoutY="143.0" mnemonicParsing="false" onAction="#btnResetOnAction" prefHeight="40.0" prefWidth="90.0" text="Reset">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
