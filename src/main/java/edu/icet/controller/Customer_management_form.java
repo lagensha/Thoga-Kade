@@ -2,6 +2,7 @@ package edu.icet.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,17 +14,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.dto.Customer_Management_InfoDTO;
 
 import java.net.URL;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 public class Customer_management_form  implements Initializable {
-ObservableList<Customer_Management_InfoDTO>customerManagementInfoDTOS= FXCollections.observableArrayList(
-        new Customer_Management_InfoDTO("C002", "Ms.", "Kumari", "1993-11-12", 52000, "No.15 Galle Road", "Colombo", "Western", "12000"),
-        new Customer_Management_InfoDTO("C003", "Mr.", "Perera", "1987-07-25", 46000, "No.8 Station Road", "Galle", "Southern", "8000"),
-        new Customer_Management_InfoDTO("C004", "Mrs.", "Silva", "1990-03-10", 55000, "No.42 Temple Lane", "Kandy", "Central", "9000"),
-        new Customer_Management_InfoDTO("C005", "Mr.", "Fernando", "1984-09-18", 60000, "No.5 Park Avenue", "Kurunegala", "North Western", "7000"),
-        new Customer_Management_InfoDTO("C006", "Ms.", "Nadeesha", "1998-01-30", 48000, "No.33 Lake View", "Matara", "Southern", "6500")
+ObservableList<Customer_Management_InfoDTO>customerManagementInfoDTOS= FXCollections.observableArrayList();
 
-);
+
     @FXML
     private Button btnAdd;
 
@@ -95,20 +92,8 @@ ObservableList<Customer_Management_InfoDTO>customerManagementInfoDTOS= FXCollect
 
     @FXML
     void btnAddOnAction(ActionEvent event) {
-            String customerid=txtCustomerId.getText();
-            String title=txtTitle.getText();
-            String name=txtName.getText();
-            String dob=txtDOB.getText();
-            double salary=Double.parseDouble(txtSalary.getText());
-            String address=txtAddress.getText();
-            String city=txtCity.getText();
-            String province=txtProvince.getText();
-            String postalcode=txtPostalcode.getText();
-
-            Customer_Management_InfoDTO customerManagementInfoDTO=new Customer_Management_InfoDTO(customerid,title,name,dob,salary,address,city,province,postalcode);
-            customerManagementInfoDTOS.add(customerManagementInfoDTO);
+        addCustomer();
         clearText();
-
     }
 
     @FXML
@@ -120,7 +105,7 @@ ObservableList<Customer_Management_InfoDTO>customerManagementInfoDTOS= FXCollect
 
     @FXML
     void btnResetOnAction(ActionEvent event) {
-        clearText();
+
     }
 
     @FXML
@@ -141,6 +126,7 @@ ObservableList<Customer_Management_InfoDTO>customerManagementInfoDTOS= FXCollect
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         colCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -152,20 +138,7 @@ ObservableList<Customer_Management_InfoDTO>customerManagementInfoDTOS= FXCollect
         colPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalcode"));
         tblCustomerManagement.setItems(customerManagementInfoDTOS);
 
-     tblCustomerManagement.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->{
-         if(newValue != null){
-             txtCustomerId.setText(newValue.getCustomerId());
-             txtTitle.setText(newValue.getTitle());
-             txtName.setText(newValue.getName());
-             txtDOB.setText(newValue.getDOB());
-             txtSalary.setText(String.valueOf(newValue.getSalary()));
-             txtAddress.setText(newValue.getAddress());
-             txtCity.setText(newValue.getCity());
-             txtProvince.setText(newValue.getProvince());
-             txtPostalcode.setText(newValue.getPostalcode());
-             
-         }
-     } );
+        getData();
     }
     public void clearText(){
         txtPostalcode.clear();
@@ -179,4 +152,52 @@ ObservableList<Customer_Management_InfoDTO>customerManagementInfoDTOS= FXCollect
         txtTitle.clear();
 
     }
-}
+    public void getData(){
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/thoga_kade","root","12345");
+            PreparedStatement preparedStatement=connection.prepareStatement("SELECT * FROM customers");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                 String customerId=resultSet.getString("ID");
+                 String title= resultSet.getString("title");
+                String name= resultSet.getString("name");
+                 String DOB=resultSet.getString("DOB");
+                 double salary=resultSet.getDouble("Salary");
+                String address=resultSet.getString("address");
+                 String city=resultSet.getString("city");
+                 String province=resultSet.getString("province");
+                String postalcode=resultSet.getString("postalcode");
+                Customer_Management_InfoDTO customerManagementInfoDTO = new Customer_Management_InfoDTO(customerId,title,name,DOB,salary,address,city,province,postalcode);
+                customerManagementInfoDTOS.add(customerManagementInfoDTO);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+     public void addCustomer(){
+         try {
+             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/thoga_kade","root","12345");
+             PreparedStatement preparedStatement=connection.prepareStatement("INSERT INTO customers VALUES(?,?,?,?,?,?,?,?,?)");
+
+            Customer_Management_InfoDTO customerManagementInfoDTO = new Customer_Management_InfoDTO(txtCustomerId.getText(),txtTitle.getText(),txtName.getText(),txtDOB.getText(),Double.parseDouble(txtSalary.getText()),txtAddress.getText(),txtCity.getText(),txtProvince.getText(),txtPostalcode.getText());
+            customerManagementInfoDTOS.add(customerManagementInfoDTO);
+            preparedStatement.setString(1,txtCustomerId.getText());
+             preparedStatement.setString(2,txtTitle.getText());
+             preparedStatement.setString(3,txtName.getText());
+             preparedStatement.setString(4,txtDOB.getText());
+             preparedStatement.setDouble(5,Double.parseDouble(txtSalary.getText()));
+             preparedStatement.setString(6,txtAddress.getText());
+             preparedStatement.setString(7,txtCity.getText());
+             preparedStatement.setString(8,txtProvince.getText());
+             preparedStatement.setString(9,txtPostalcode.getText());
+
+            preparedStatement.executeUpdate();
+         } catch (SQLException e) {
+             throw new RuntimeException(e);
+         }
+
+
+     }
+     }
+
