@@ -7,6 +7,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Supplier_Management_DTO {
     private String supplierId;
     private String name;

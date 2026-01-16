@@ -28,20 +28,33 @@ public class login_form_controller {
 
     @FXML
     void btnLoginOnAction(ActionEvent event) {
-        String userName=txtUserName.getText();
-        String password=txtPassword.getText();
-        if(userName==null || password.equals("Admin123")){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Invalid Login Please try again...!");
-            alert.showAndWait();
-        }else{
-            try {
-                stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/DashBoard.fxml"))));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            if(txtUserName.getText()==null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Invalid Login Please try again...!");
+                alert.showAndWait();
+            }else{
+                try {
+                    stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/DashBoard.fxml"))));
+                    stage.show();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+
             }
-            stage.show();
+            if(txtPassword.equals("Admin@123")){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Invalid Login Please try again...!");
+                alert.showAndWait();
+            }else{
+                try {
+                    stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/DashBoard.fxml"))));
+                    stage.show();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 
-}
+

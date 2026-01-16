@@ -1,4 +1,4 @@
-package edu.icet.controller;
+package edu.icet.controller.supplier;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,17 +16,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Supplier_Management_Controller implements Initializable {
-
-    ObservableList<Supplier_Management_DTO>supplierManagementDTOS= FXCollections.observableArrayList(
-            new Supplier_Management_DTO("S002", "Perera Distributors", "Sunrise Foods Ltd", "No.12 Galle Road", "Colombo", "Western", "00300", "0778456123", "sunrisefoods@gmail.com"),
-            new Supplier_Management_DTO("S003", "Silva Traders", "Ceylon Spices Co.", "No.88 Temple Road", "Kandy", "Central", "20000", "0759632145", "ceylonspices@gmail.com"),
-            new Supplier_Management_DTO("S004", "Ranasinghe Enterprises", "Fresh Harvest Pvt Ltd", "No.22 Lake View", "Kurunegala", "North Western", "60000", "0714523987", "freshharvest@gmail.com"),
-            new Supplier_Management_DTO("S005", "Jayasinghe & Sons", "Green Valley Supplies", "No.10 Market Street", "Galle", "Southern", "80000",
-                    "0782145698", "greenvalley@gmail.com"),
-            new Supplier_Management_DTO("S006", "Wijesooriya Traders", "Island Agro Imports", "No.05 Station Road", "Anuradhapura", "North Central", "50000",
-                    "0763358921", "islandagro@gmail.com")
-
-    );
+        SupplierController supplierController = new SupplierController();
+    ObservableList<Supplier_Management_DTO>supplierManagementDTOS= FXCollections.observableArrayList();
 
     @FXML
     private Button btnAdd;
@@ -109,35 +100,39 @@ public class Supplier_Management_Controller implements Initializable {
         String phonenumber=txtPhoneNumber.getText();
         String email=txtEmail.getText();
 
-        Supplier_Management_DTO supplierManagementDto=new Supplier_Management_DTO(supplierId,name,companyName,address,city,province,postalCode,phonenumber,email);
-        supplierManagementDTOS.add(supplierManagementDto);
-    }
-
-    @FXML
-    void btnDeleteOnAction(ActionEvent event) {
-        Supplier_Management_DTO deleteInfoDTO=tblSupplierDetails.getSelectionModel().getSelectedItem();
-        supplierManagementDTOS.remove(deleteInfoDTO);
+        supplierController.addSupplier(supplierId,name,companyName,address,city,province,postalCode,phonenumber,email);
+        loadTable();
         clearText();
     }
 
     @FXML
+    void btnDeleteOnAction(ActionEvent event) {
+        String supplierId=txtSupplierId.getText();
+      supplierController.deleteSupplier(supplierId);
+      loadTable();
+      clearText();
+    }
+
+    @FXML
     void btnUpdateOnAction(ActionEvent event) {
-        Supplier_Management_DTO updateInfoDTO=tblSupplierDetails.getSelectionModel().getSelectedItem();
-        updateInfoDTO.setSupplierId(txtSupplierId.getText());
-        updateInfoDTO.setName(txtName.getText());
-        updateInfoDTO.setCompanyName(txtCompanyName.getText());
-        updateInfoDTO.setProvince(txtProvince.getText());
-        updateInfoDTO.setAddress(txtAddress.getText());
-        updateInfoDTO.setCity(txtCity.getText());
-        updateInfoDTO.setPostalCode(txtPostalCode.getText());
-        updateInfoDTO.setPhone(txtPhoneNumber.getText());
-        updateInfoDTO.setEmail(txtEmail.getText());
-        tblSupplierDetails.refresh();
+        String name=txtName.getText();
+        String companyName=txtName.getText();
+        String address=txtAddress.getText();
+        String city=txtCity.getText();
+        String province=txtProvince.getText();
+        String postalCode=txtPostalCode.getText();
+        String phonenumber=txtPhoneNumber.getText();
+        String email=txtEmail.getText();
+        String supplierId=txtSupplierId.getText();
+
+        supplierController.updateSupplier(name,companyName,address,city,province,postalCode,phonenumber,email,supplierId);
+        loadTable();
         clearText();
     }
 
     @FXML
     public void btnResetOnAction(ActionEvent actionEvent) {
+
         clearText();
     }
 
@@ -149,11 +144,11 @@ public class Supplier_Management_Controller implements Initializable {
         colCompanyName.setCellValueFactory(new PropertyValueFactory<>("companyName"));
         colCity.setCellValueFactory(new PropertyValueFactory<>("city"));
         colProvince.setCellValueFactory(new PropertyValueFactory<>("province"));
-        colPhoneNumber.setCellValueFactory(new PropertyValueFactory<>(" phone"));
+        colPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
 
-        tblSupplierDetails.setItems(supplierManagementDTOS);
+        loadTable();
 
         tblSupplierDetails.getSelectionModel().selectedItemProperty().addListener((observableValue,oldValue,newValue) ->{
             if(newValue != null){
@@ -168,6 +163,10 @@ public class Supplier_Management_Controller implements Initializable {
                 txtEmail.setText(newValue.getEmail());
             }
         });
+    }
+    public void loadTable(){
+
+        tblSupplierDetails.setItems(supplierController.viewSupplier());
     }
         public void clearText(){
             txtSupplierId.clear();
