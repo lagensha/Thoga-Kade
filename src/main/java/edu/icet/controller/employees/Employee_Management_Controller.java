@@ -1,4 +1,4 @@
-package edu.icet.controller;
+package edu.icet.controller.employees;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,13 +16,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Employee_Management_Controller implements Initializable {
-    ObservableList<Employee_Management_DTO> employeeManagementDTOS= FXCollections.observableArrayList(
-            new Employee_Management_DTO("E002", "Kamal Fernando", "871254789V", "1987-03-22", "Assistant Manager", 62500.0, "0778541236", "No.20 Beach Road, Galle", "2019-02-18", "Active"),
-            new Employee_Management_DTO("E003", "Nadeesha Silva", "915478963V", "1991-11-05", "Accountant", 68500.0, "0719654785", "No.42 Station Road, Panadura", "2020-07-01", "Active"),
-            new Employee_Management_DTO("E004", "Chathura Jayasena", "902365478V", "1990-01-28", "Sales Executive", 52000.0, "0758456932", "No.08 Lake View, Kandy", "2021-03-15", "Active"),
-            new Employee_Management_DTO("E005", "Ruvini Peris", "945632178V", "1994-06-10", "Cashier", 42000.0, "0784561239", "No.55 Temple Junction, Matara", "2022-09-09", "Active"),
-            new Employee_Management_DTO("E006", "Mahesh Ranasinghe", "885694123V", "1988-12-19", "Store Keeper", 48000.0, "0763214589", "No.11 Main Street, Kurunegala", "2017-11-25", "Inactive")
-    );
+    EmployeeController employeeController = new EmployeeController();
+    ObservableList<Employee_Management_DTO> employeeManagementDTOS= FXCollections.observableArrayList();
     @FXML
     private Button btnAdd;
 
@@ -104,24 +99,25 @@ public class Employee_Management_Controller implements Initializable {
         String name=txtName.getText();
         String nic=txtNIC.getText();
         String dob=txtDOB.getText();
+        double salary=Double.parseDouble(txtSalary.getText());
         String position=txtPosition.getText();
-         double salary=Double.parseDouble(txtSalary.getText());
          String contactNumber=txtPhoneNumber.getText();
          String address=txtAddress.getText();
          String joinedDate=txtJoinDate.getText();
          String status=txtStatus.getText();
 
-        Employee_Management_DTO employeeManagementDTO=new Employee_Management_DTO(employeeId,name,nic,dob,position,salary,contactNumber,address,joinedDate,status);
-        employeeManagementDTOS.add(employeeManagementDTO);
+        employeeController.addEmployee(employeeId,name,nic,dob,salary,position,contactNumber,address,joinedDate,status);
+        loadTable();
     clearText();
 
     }
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
-        Employee_Management_DTO deleteIntoDTO=tblEmployeeDetails.getSelectionModel().getSelectedItem();
-        employeeManagementDTOS.remove(deleteIntoDTO);
-        clearText();
+        String employeeId=txtEmployeeId.getText();
+      employeeController.deleteEmployee(employeeId);
+      loadTable();
+      clearText();
     }
 
     @FXML
@@ -131,18 +127,20 @@ public class Employee_Management_Controller implements Initializable {
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
-        Employee_Management_DTO updateInfoDTO=tblEmployeeDetails.getSelectionModel().getSelectedItem();
-        updateInfoDTO.setEmployeeId(txtEmployeeId.getText());
-        updateInfoDTO.setName(txtName.getText());
-        updateInfoDTO.setNic(txtNIC.getText());
-        updateInfoDTO.setDob(txtDOB.getText());
-        updateInfoDTO.setPosition(txtPosition.getText());
-        updateInfoDTO.setSalary(Double.parseDouble(txtSalary.getText()));
-        updateInfoDTO.setContactNumber(txtPhoneNumber.getText());
-        updateInfoDTO.setAddress(txtAddress.getText());
-        updateInfoDTO.setJoinedDate(txtJoinDate.getText());
-        updateInfoDTO.setStatus(txtStatus.getText());
-        tblEmployeeDetails.refresh();
+
+        String employeeId=txtEmployeeId.getText();
+        String name=txtName.getText();
+        String nic=txtNIC.getText();
+        String dob=txtDOB.getText();
+        String position=txtPosition.getText();
+        double salary=Double.parseDouble(txtSalary.getText());
+        String contactNumber=txtPhoneNumber.getText();
+        String address=txtAddress.getText();
+        String joinedDate=txtJoinDate.getText();
+        String status=txtStatus.getText();
+
+        employeeController.updateEmployee(name,nic,dob,salary,position,contactNumber,address,joinedDate,status,employeeId);
+        loadTable();
         clearText();
 
     }
@@ -150,17 +148,17 @@ public class Employee_Management_Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colEmploteeId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
-        colName.setCellValueFactory(new PropertyValueFactory<>(" name"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colNIC.setCellValueFactory(new PropertyValueFactory<>("nic"));
         colDOB.setCellValueFactory(new PropertyValueFactory<>("dob"));
         colPosition.setCellValueFactory(new PropertyValueFactory<>("position"));
         colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
         colPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("contactNumber"));
-        colAddress.setCellValueFactory(new PropertyValueFactory<>(" address"));
+        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colJoinedDate.setCellValueFactory(new PropertyValueFactory<>("joinedDate"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        tblEmployeeDetails.setItems(employeeManagementDTOS);
+        loadTable();
 
         tblEmployeeDetails.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->{
             if(newValue!=null){
@@ -176,6 +174,9 @@ public class Employee_Management_Controller implements Initializable {
                 txtStatus.setText(newValue.getStatus());
             }
         } );
+    }
+    public void loadTable(){
+        tblEmployeeDetails.setItems(employeeController.viewEmployee());
     }
     public void clearText(){
         txtEmployeeId.clear();

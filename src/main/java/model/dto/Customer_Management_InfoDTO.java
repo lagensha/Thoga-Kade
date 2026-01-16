@@ -17,4 +17,5 @@ public class Customer_Management_InfoDTO {
     private String city;
     private String province;
     private String postalcode;
+
 }

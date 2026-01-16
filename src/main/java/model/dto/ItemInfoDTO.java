@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 public class ItemInfoDTO {
-    private String itemCode;
+    private Integer itemCode;
     private String description;
     private String category;
     private int qtyOnHand;
