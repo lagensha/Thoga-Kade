@@ -1,0 +1,2 @@
+Thoga Kade is a JavaFX-based restaurant ordering and POS-style desktop app. Users can browse food items, add them to a cart, adjust quantities, and view a bill summary. The project focuses on practical JavaFX UI design, event handling, and a real-world ordering workflow.
+The Past few weeks I was developed this project using  ObservableList but it was not suitable for real world project because the there is many issues with it so i connect this project<s all data to DataBase and now we can easly manage 
